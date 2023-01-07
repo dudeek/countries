@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 import MoonIcon from "@/assets/icons/MoonIcon.vue";
-import { ECountriesMode } from "@/types/countries";
-import type { Ref } from "vue";
+import { EThemeMode } from "@/types/countries";
+import type { ComputedRef, Ref } from "vue";
 import { computed, ref } from "vue";
 
-const themeMode: Ref<ECountriesMode> = ref(ECountriesMode.LIGHT_MODE);
-const themeModeTile = computed(() =>
-  themeMode.value === ECountriesMode.LIGHT_MODE ? "Light Mode" : "Dark Mode"
+const themeMode: Ref<EThemeMode> = ref(EThemeMode.LIGHT_MODE);
+const themeModeTitle: ComputedRef<string> = computed(() =>
+  themeMode.value === EThemeMode.LIGHT_MODE ? "Light Mode" : "Dark Mode"
 );
 
 const changeTheme = () => {
-  themeMode.value === ECountriesMode.LIGHT_MODE
-    ? (themeMode.value = ECountriesMode.DARK_MODE)
-    : (themeMode.value = ECountriesMode.LIGHT_MODE);
+  themeMode.value =
+    themeMode.value === EThemeMode.LIGHT_MODE
+      ? EThemeMode.DARK_MODE
+      : EThemeMode.LIGHT_MODE;
 
   document.querySelector(":root")?.classList.toggle("dark-theme");
 };
@@ -26,7 +27,7 @@ const changeTheme = () => {
       </RouterLink>
       <button class="c-header__theme-container" @click="changeTheme()">
         <MoonIcon class="c-header__moon-icon" />
-        <span class="c-header__theme-mode-title">{{ themeModeTile }}</span>
+        <span class="c-header__theme-mode-title">{{ themeModeTitle }}</span>
       </button>
     </div>
   </header>
@@ -43,7 +44,8 @@ const changeTheme = () => {
   &__elements-wrapper {
     margin: 0 auto;
     padding: 0 3.2rem;
-    width: 124rem;
+    max-width: 124rem;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -73,7 +75,7 @@ const changeTheme = () => {
   }
 
   &__theme-mode-title {
-    width: max-content;
+    width: fit-content;
     font-size: 1.4rem;
     color: var(--text-color);
   }

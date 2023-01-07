@@ -1,22 +1,31 @@
 :root {
+  --background-dark-blue: hsl(207, 26%, 17%);
+  --background-light-gray: hsl(0, 0%, 98%);
+  --text-black: hsl(200, 15%, 8%);
+  --text-gray: hsl(0, 0%, 52%);
+  --dark-blue: hsl(209, 23%, 22%);
+  --white: hsl(0, 0%, 100%);
+  --shadow-dark-theme: hsla(0, 0%, 96%, .2) 0 0 8px;
+  --shadow-light-theme: hsla(210, 8%, 62%, 20%) 0px 8px 24px;
+  
   --fw-light: 300;
   --fw-normal: 600;
   --fw-bold: 800;
 }
 
 :root.dark-theme {
-  --background-color: hsl(207, 26%, 17%);
-  --text-color: hsl(0, 0%, 100%);
-  --icon-fill: hsl(0, 0%, 100%);
-  --header-color: hsl(209, 23%, 22%);
-  --shadow: hsla(0, 0%, 96%, .2) 0 0 8px;
+  --background-color: var(--background-dark-blue);
+  --text-color: var(--white);
+  --icon-fill: var(--white);
+  --header-color: var(--dark-blue);
+  --shadow: var(--shadow-dark-theme);
 }
 
 :root:not(.dark-theme) {
-  --background-color: hsl(0, 0%, 98%);
-  --text-color: hsl(200, 15%, 8%);
+  --background-color: var(--background-light-gray);
+  --text-color: var(--text-black);
   --icon-fill: transparent;
-  --header-color: hsl(0, 0%, 100%);
-  --shadow: hsla(210, 8%, 62%, 20%) 0px 8px 24px;
-  --gray: hsl(0, 0%, 52%);
+  --header-color: var(--white);
+  --shadow: var(--shadow-light-theme);
+  --gray: var(--text-gray);
 }
