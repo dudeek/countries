@@ -10,7 +10,7 @@ import CountryBoard from "@/components/CountryBoard.vue";
 
 <style lang="scss" scoped>
 .v-countries-list {
-  height: calc(100% - 8.2rem);
   padding: 6.4rem 0;
+  background-color: var(--background-color);
 }
 </style>

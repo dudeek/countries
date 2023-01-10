@@ -4,19 +4,36 @@ import { EThemeMode } from "@/types/countries";
 import type { ComputedRef, Ref } from "vue";
 import { computed, ref } from "vue";
 
+const darkTheme = "dark-theme";
 const themeMode: Ref<EThemeMode> = ref(EThemeMode.LIGHT_MODE);
 const themeModeTitle: ComputedRef<string> = computed(() =>
   themeMode.value === EThemeMode.LIGHT_MODE ? "Light Mode" : "Dark Mode"
 );
 
-const changeTheme = () => {
+const checkIfDarkTheme = () => localStorage.getItem(darkTheme);
+
+const toggleLocalStorageItem = () => {
+  if (checkIfDarkTheme()) {
+    localStorage.removeItem(darkTheme);
+  } else {
+    localStorage.setItem(darkTheme, "true");
+  }
+};
+
+const changeThemeMode = () => {
   themeMode.value =
     themeMode.value === EThemeMode.LIGHT_MODE
       ? EThemeMode.DARK_MODE
       : EThemeMode.LIGHT_MODE;
 
-  document.querySelector(":root")?.classList.toggle("dark-theme");
+  document.querySelector(":root")?.classList.toggle(darkTheme);
+  toggleLocalStorageItem();
 };
+
+if (checkIfDarkTheme()) {
+  themeMode.value = EThemeMode.DARK_MODE;
+  document.querySelector(":root")?.classList.toggle(darkTheme);
+}
 </script>
 
 <template>
@@ -25,7 +42,7 @@ const changeTheme = () => {
       <RouterLink class="c-header__title" to="/"
         >Where is the world?
       </RouterLink>
-      <button class="c-header__theme-container" @click="changeTheme()">
+      <button class="c-header__theme-container" @click="changeThemeMode()">
         <MoonIcon class="c-header__moon-icon" />
         <span class="c-header__theme-mode-title">{{ themeModeTitle }}</span>
       </button>
@@ -35,7 +52,8 @@ const changeTheme = () => {
 
 <style lang="scss" scoped>
 .c-header {
-  height: 8.2rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
   background-color: var(--header-color);
   box-shadow: var(--shadow);
   display: flex;
@@ -43,10 +61,9 @@ const changeTheme = () => {
 
   &__elements-wrapper {
     margin: 0 auto;
-    padding: 0 3.2rem;
-    max-width: 124rem;
-    width: 100%;
+    max-width: 120rem;
     display: flex;
+    flex: 1;
     align-items: center;
     justify-content: space-between;
   }
@@ -67,11 +84,8 @@ const changeTheme = () => {
   &__moon-icon {
     height: 1.4rem;
     width: 1.4rem;
-
-    :deep(path) {
-      stroke: var(--text-color);
-      fill: var(--icon-fill);
-    }
+    stroke: var(--text-color);
+    fill: var(--icon-fill);
   }
 
   &__theme-mode-title {

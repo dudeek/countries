@@ -1,16 +1,21 @@
+$vars: (
+        "background-dark-blue": "hsl(207, 26%, 17%)",
+        "background-light-gray": "hsl(0, 0%, 98%)",
+        "text-black": "hsl(200, 15%, 8%)",
+        "text-gray": "hsl(0, 0%, 52%)",
+        "dark-blue": "hsl(209, 23%, 22%)",
+        "white": "hsl(0, 0%, 100%)",
+        "shadow-dark-theme": "hsla(0, 0%, 96%, .2) 0 0 8px",
+        "shadow-light-theme": "hsla(210, 8%, 62%, 20%) 0px 8px 24px",
+        "fw-light": 300,
+        "fw-normal": 600,
+        "fw-bold": 800,
+);
+
 :root {
-  --background-dark-blue: hsl(207, 26%, 17%);
-  --background-light-gray: hsl(0, 0%, 98%);
-  --text-black: hsl(200, 15%, 8%);
-  --text-gray: hsl(0, 0%, 52%);
-  --dark-blue: hsl(209, 23%, 22%);
-  --white: hsl(0, 0%, 100%);
-  --shadow-dark-theme: hsla(0, 0%, 96%, .2) 0 0 8px;
-  --shadow-light-theme: hsla(210, 8%, 62%, 20%) 0px 8px 24px;
-  
-  --fw-light: 300;
-  --fw-normal: 600;
-  --fw-bold: 800;
+  @each $property, $value in $vars {
+    --#{$property}: #{$value}
+  }
 }
 
 :root.dark-theme {
