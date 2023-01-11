@@ -1,16 +1,8 @@
 <script lang="ts" setup>
 import MoonIcon from "@/assets/icons/MoonIcon.vue";
-import { EThemeMode } from "@/types/countries";
-import { computed } from "vue";
-import { useThemeHook } from "@/hooks/theme.hook";
+import { useTheme } from "@/hooks/theme.hook";
 
-const { themeMode, checkThemeMode, changeThemeMode } = useThemeHook();
-
-const themeModeTitle = computed(() =>
-  themeMode.value === EThemeMode.LIGHT_MODE
-    ? EThemeMode.LIGHT_MODE
-    : EThemeMode.DARK_MODE
-);
+const { themeMode, checkThemeMode, changeThemeMode } = useTheme();
 
 checkThemeMode();
 </script>
@@ -23,7 +15,7 @@ checkThemeMode();
       </RouterLink>
       <button class="c-header__theme-container" @click="changeThemeMode()">
         <MoonIcon class="c-header__moon-icon" />
-        <span class="c-header__theme-mode-title">{{ themeModeTitle }}</span>
+        <span class="c-header__theme-mode-title">{{ themeMode }}</span>
       </button>
     </div>
   </header>

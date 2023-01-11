@@ -8,14 +8,18 @@ interface UseThemeHook {
   changeThemeMode: () => void;
 }
 
-export const useThemeHook = (): UseThemeHook => {
-  const themeMode = ref(EThemeMode.LIGHT_MODE);
+export const useTheme = (): UseThemeHook => {
+  const themeMode = ref(
+    (localStorage.getItem("themeMode") as EThemeMode) || EThemeMode.LIGHT_MODE
+  );
+
+  const themeToggle = () => {
+    document.querySelector(":root")?.classList.toggle("dark-theme");
+  };
 
   const checkThemeMode = () => {
-    const savedTheme = localStorage.getItem("themeMode") as EThemeMode;
-    themeMode.value = savedTheme !== null ? savedTheme : EThemeMode.LIGHT_MODE;
     if (themeMode.value !== EThemeMode.LIGHT_MODE) {
-      document.querySelector(":root")?.classList.toggle("dark-theme");
+      themeToggle();
     }
   };
 
@@ -26,7 +30,7 @@ export const useThemeHook = (): UseThemeHook => {
         : EThemeMode.LIGHT_MODE;
 
     localStorage.setItem("themeMode", themeMode.value);
-    document.querySelector(":root")?.classList.toggle("dark-theme");
+    themeToggle();
   };
 
   return {
