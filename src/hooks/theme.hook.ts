@@ -4,13 +4,14 @@ import { ref } from "vue";
 
 interface UseThemeHook {
   themeMode: Ref<EThemeMode>;
-  checkThemeMode: () => void;
-  changeThemeMode: () => void;
+  checkThemeMode: VoidFunction;
+  changeThemeMode: VoidFunction;
 }
 
 export const useTheme = (): UseThemeHook => {
-  const themeMode = ref(
-    (localStorage.getItem("themeMode") as EThemeMode) || EThemeMode.LIGHT_MODE
+  const themeMode: Ref<EThemeMode> = ref(
+    (localStorage.getItem("themeMode") as EThemeMode | null) ||
+      EThemeMode.LIGHT_MODE
   );
 
   const themeToggle = () => {
@@ -18,7 +19,7 @@ export const useTheme = (): UseThemeHook => {
   };
 
   const checkThemeMode = () => {
-    if (themeMode.value !== EThemeMode.LIGHT_MODE) {
+    if (themeMode.value === EThemeMode.DARK_MODE) {
       themeToggle();
     }
   };
