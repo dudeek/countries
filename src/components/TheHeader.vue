@@ -1,39 +1,18 @@
 <script lang="ts" setup>
 import MoonIcon from "@/assets/icons/MoonIcon.vue";
 import { EThemeMode } from "@/types/countries";
-import type { ComputedRef, Ref } from "vue";
-import { computed, ref } from "vue";
+import { computed } from "vue";
+import { useThemeHook } from "@/hooks/theme.hook";
 
-const darkTheme = "dark-theme";
-const themeMode: Ref<EThemeMode> = ref(EThemeMode.LIGHT_MODE);
-const themeModeTitle: ComputedRef<string> = computed(() =>
-  themeMode.value === EThemeMode.LIGHT_MODE ? "Light Mode" : "Dark Mode"
+const { themeMode, checkThemeMode, changeThemeMode } = useThemeHook();
+
+const themeModeTitle = computed(() =>
+  themeMode.value === EThemeMode.LIGHT_MODE
+    ? EThemeMode.LIGHT_MODE
+    : EThemeMode.DARK_MODE
 );
 
-const checkIfDarkTheme = () => localStorage.getItem(darkTheme);
-
-const toggleLocalStorageItem = () => {
-  if (checkIfDarkTheme()) {
-    localStorage.removeItem(darkTheme);
-  } else {
-    localStorage.setItem(darkTheme, "true");
-  }
-};
-
-const changeThemeMode = () => {
-  themeMode.value =
-    themeMode.value === EThemeMode.LIGHT_MODE
-      ? EThemeMode.DARK_MODE
-      : EThemeMode.LIGHT_MODE;
-
-  document.querySelector(":root")?.classList.toggle(darkTheme);
-  toggleLocalStorageItem();
-};
-
-if (checkIfDarkTheme()) {
-  themeMode.value = EThemeMode.DARK_MODE;
-  document.querySelector(":root")?.classList.toggle(darkTheme);
-}
+checkThemeMode();
 </script>
 
 <template>
