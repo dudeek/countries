@@ -1,10 +1,5 @@
-export const getCountriesList = () => {
-  return fetch("https://restcountries.com/v2/all")
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      return error;
-    });
+import type { ICountry } from "@/types/countries";
+
+export const getCountriesList = async (): Promise<ICountry[]> => {
+  return (await fetch("https://restcountries.com/v2/all")).json();
 };

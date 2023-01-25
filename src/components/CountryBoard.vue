@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import { useCountriesStore } from "@/stores/countries.store";
-import { computed, onMounted } from "vue";
-import { ICountry } from "@/types/countries";
+import { computed, onBeforeMount } from "vue";
 
 const store = useCountriesStore();
-const isLoading = computed((): boolean => store.$state.isLoading);
-const countriesList = computed((): ICountry[] => store.$state.countriesList);
+const isLoading = computed(() => store.isLoading);
+const countriesList = computed(() => store.countriesList);
 const countryBasicInfoTitles = [
   {
     title: "Population",
@@ -21,7 +20,7 @@ const countryBasicInfoTitles = [
   },
 ];
 
-onMounted(() => {
+onBeforeMount(() => {
   store.getCountriesList();
 });
 </script>
@@ -30,8 +29,8 @@ onMounted(() => {
   <div class="c-countryBoard">
     <div v-if="!isLoading" class="c-countryBoard__board">
       <div
-        v-for="(country, index) in countriesList"
-        :key="`${country}-${index}`"
+        v-for="country in countriesList"
+        :key="country.name"
         class="c-countryBoard__country"
       >
         <img
@@ -54,23 +53,22 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <span v-else class="c-countryBoard__loader">LOADING</span>
+    <p v-else class="c-countryBoard__loader">LOADING</p>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .c-countryBoard {
-  width: 100%;
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 2rem;
 
   &__board {
-    width: 100%;
     padding: 2.5rem 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, 270px);
     gap: 4rem;
+    justify-content: center;
   }
 
   &__country {
@@ -85,14 +83,12 @@ onMounted(() => {
     width: 100%;
     height: 15rem;
     object-fit: cover;
-    object-position: center center;
+    object-position: center;
     box-shadow: var(--shadow);
   }
 
   &__countryBasicInfoContainer {
     padding: 1rem 1.5rem 2rem;
-    display: flex;
-    flex-direction: column;
   }
 
   &__countryName {
@@ -106,11 +102,11 @@ onMounted(() => {
   }
 
   &__loader {
-    display: block;
     text-align: center;
     font-size: 20rem;
   }
 
+  p,
   span,
   h3 {
     color: var(--text-color);
