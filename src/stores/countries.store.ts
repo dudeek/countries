@@ -1,11 +1,14 @@
 import { defineStore } from "pinia";
 import { getCountriesList } from "@/service/countries.service";
 import type { ICountry } from "@/types/countries";
+import { useCommon } from "@/hooks/common.hook";
 
 export type CountriesState = {
   isLoading: boolean;
   countriesList: ICountry[];
 };
+
+const { handleError } = useCommon();
 
 export const useCountriesStore = defineStore("countries", {
   state: (): CountriesState => ({
@@ -20,7 +23,7 @@ export const useCountriesStore = defineStore("countries", {
       try {
         this.countriesList = await getCountriesList();
       } catch (error) {
-        console.error(error);
+        handleError("Request failed");
       } finally {
         this.isLoading = false;
       }

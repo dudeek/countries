@@ -53,7 +53,7 @@ onBeforeMount(() => {
         </div>
       </div>
     </div>
-    <p v-else class="c-countryBoard__loader">LOADING</p>
+    <div v-else class="c-countryBoard__loader">LOADING</div>
   </div>
 </template>
 
@@ -66,7 +66,7 @@ onBeforeMount(() => {
   &__board {
     padding: 2.5rem 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 270px);
+    grid-template-columns: repeat(auto-fill, 27rem);
     gap: 4rem;
     justify-content: center;
   }
