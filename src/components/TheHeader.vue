@@ -32,6 +32,7 @@ checkThemeMode();
 
   &__elements-wrapper {
     margin: 0 auto;
+    padding: 0 2rem;
     max-width: 120rem;
     display: flex;
     flex: 1;
